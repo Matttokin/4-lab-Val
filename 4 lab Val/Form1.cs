@@ -23,42 +23,7 @@ namespace _4_lab_Val
         }
 
 
-        static int getColor(int bite, int R, int G, int B) //расчет цвета пикселя на основе бита
-        {
-            double lam = 0.2;
-            if (bite == 1)
-            {
-                return (int)(B + lam * (0.3 * R + 0.59 * G + 0.11 * B));
-            }
-            else
-            {
-                return (int)(B - lam * (0.3 * R + 0.59 * G + 0.11 * B));
-            }
-        }
-
-        static int getBite(Bitmap image, int x, int y) //рассчет бита на основе цвета пикселя
-        {
-
-            int meanBlue;
-            int sumBlue = 0;
-
-            
-                sumBlue += image.GetPixel(x + 1, y).B;
-                sumBlue += image.GetPixel(x - 1, y).B;
-                sumBlue += image.GetPixel(x, y + 1).B;
-                sumBlue += image.GetPixel(x, y - 1).B;
-
-            meanBlue = sumBlue / 4;
-
-            if (image.GetPixel(x, y).B > meanBlue)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
+        
         static int[,] string2Array(String stringIn) //получение массива байт в виде чисел
         {
             int[,] arr = new int[stringIn.Length, 8];
@@ -117,7 +82,8 @@ namespace _4_lab_Val
                         int[] arrayPixel = calcPos(j * 8 + i, image.Width); 
                         Color palet = image.GetPixel(arrayPixel[0], arrayPixel[1]);
                         Color bcolor = Color.FromArgb(palet.R, palet.G, getColor(arr[i], palet.R, palet.G, palet.B)); 
-                        image.SetPixel(arrayPixel[0], arrayPixel[1], bcolor); 
+                        image.SetPixel(arrayPixel[0], arrayPixel[1], bcolor);
+                        Console.WriteLine(arr[i]);
                     }
                 }
 
@@ -212,7 +178,42 @@ namespace _4_lab_Val
                 return new int[2] { tmpWeight+ 5, tmpHeight + 5 };
             }
         }
+        static int getColor(int bite, int R, int G, int B) //расчет цвета пикселя на основе бита
+        {
+            double lam = 0.2;
+            if (bite == 1)
+            {
+                return (int)(B + lam * (0.3 * R + 0.59 * G + 0.11 * B));
+            }
+            else
+            {
+                return (int)(B - lam * (0.3 * R + 0.59 * G + 0.11 * B));
+            }
+        }
 
+        static int getBite(Bitmap image, int x, int y) //рассчет бита на основе цвета пикселя
+        {
+
+            int meanBlue;
+            int sumBlue = 0;
+
+
+            sumBlue += image.GetPixel(x + 1, y).B;
+            sumBlue += image.GetPixel(x - 1, y).B;
+            sumBlue += image.GetPixel(x, y + 1).B;
+            sumBlue += image.GetPixel(x, y - 1).B;
+
+            meanBlue = sumBlue / 4;
+
+            if (image.GetPixel(x, y).B > meanBlue)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
         private void button5_Click(object sender, EventArgs e) //выбор файла для чтения
         {
             try { 
