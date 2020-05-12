@@ -25,7 +25,6 @@ namespace _4_lab_Val
 
         static int getColor(int bite, int R, int G, int B) //расчет цвета пикселя на основе бита
         {
-            //расчитываем по формулам https://habr.com/ru/post/115287/
             double lam = 0.2;
             if (bite == 1)
             {
